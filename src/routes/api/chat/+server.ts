@@ -4,7 +4,7 @@ import { streamText } from 'ai';
 import { GOOGLE_API_KEY } from '$env/static/private';
 import { saveChatsById } from '$lib/server/db';
 import { auth } from '$lib';
-import { titleGen } from '../titleGen/+server';
+import { titleGen } from './titleGen';
 
 const google = createGoogleGenerativeAI({
     apiKey: GOOGLE_API_KEY,
