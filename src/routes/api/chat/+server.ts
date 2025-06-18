@@ -38,7 +38,6 @@ export async function POST({ request }: any) {
         const refererUrl = new URL(referer);
         chatId = refererUrl.pathname.split('/')[2]
     } else {
-        console.log('no chatId found')
         return null;
     }
 
@@ -53,16 +52,10 @@ export async function POST({ request }: any) {
                     let aiMessage = await result.text
                     let userMessage = lastUserMessage?.content || '';
                     let title = "";
-                    try {
-                        title = await titleGen(messages)
-                    } catch (error) {
-                        console.log("Error generating title ", error)
+                    if (Object.keys(messages).length == 1) {
+                        title = await titleGen(messages) || ''
                     }
-                    try {
-                        await saveChatsById(chatId, userId, aiMessage, userMessage, title)
-                    } catch (error) {
-                        console.log("Error saving chat: ", error)
-                    }
+                    await saveChatsById(chatId, userId, aiMessage, userMessage, title)
                 }
             }
         });
